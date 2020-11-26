@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "base/header.html" %}
+</head>
+<body>
+<!-- Page Content -->
+{% include 'base/nav.html' %}
+<div class="container">
+
+    {% block container %}
+    {% endblock %}
+</div>
+
+</body>
+<footer>
+    {% include "base/footer.html" %}
+</footer>
+</html>
