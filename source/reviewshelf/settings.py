@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.contrib import messages
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -36,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'reviewapp.account',
     'reviewapp.review',
     'reviewapp.core',
@@ -108,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bishkek'
 
 USE_I18N = True
 
@@ -134,3 +137,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, './media')
 
 
+# Message framework
+MESSAGE_TAGS = {
+    messages.INFO: 'alert alert-info',
+    messages.SUCCESS: 'alert alert-success',
+    messages.WARNING: 'alert alert-warning',
+    messages.ERROR: 'alert alert-danger',
+    messages.DEBUG: 'alert alert-info',
+}
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

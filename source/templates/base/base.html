@@ -3,9 +3,16 @@
 <html lang="en">
 <head>
     {% include "base/header.html" %}
+    {% block header %}
+    {% endblock %}
 </head>
 <body>
 <!-- Page Content -->
+<div class="container content-center">
+    {% block content %}
+    {% endblock %}
+</div>
+
 {% include 'base/nav.html' %}
 <div class="container">
 
@@ -16,5 +23,6 @@
 </body>
 <footer>
     {% include "base/footer.html" %}
+    {% include "ajax/load_sub_category.html" %}
 </footer>
 </html>

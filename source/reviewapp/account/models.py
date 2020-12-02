@@ -1,12 +1,44 @@
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
+from django.contrib.contenttypes.models import ContentType
 from django.core.validators import RegexValidator
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
 
 # Create your models here.
 from reviewapp.account.manager import UserManager
 from reviewapp.core.utils import GenderChoices
+
+
+class BalanceHistory(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+    update = models.DateTimeField(auto_now=True)
+    title = models.CharField(
+        max_length=255,
+        blank=True, null=True,
+        verbose_name="Name of Content",
+        help_text="The name of the content from which this unit of history is generated"
+    )
+    description = models.CharField(
+        max_length=255,
+        blank=True, null=True,
+        verbose_name="Description of Content",
+        help_text="From where this unit of history is generated"
+    )
+    user = models.CharField(
+        max_length=255,
+        blank=True, null=True,
+        verbose_name="User name",
+        help_text="for which User"
+    )
+
+    # Generic Foreignkey Configuration. DO NOT CHANGE
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey()
+
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -28,9 +60,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
     activation_token = models.UUIDField(blank=True, null=True)
     balance = models.DecimalField(max_digits=9, decimal_places=0, default=0)
+    bio = models.TextField(blank=True, null=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
     objects = UserManager()
+    balance_history = GenericRelation(BalanceHistory)
 
     class Meta:
         db_table = "users"
@@ -48,11 +82,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.get_full_name() + ": " + str(self.phone)
 
     def get_full_name(self):
-        return self.first_name + self.last_name
+        return self.first_name +" "+ self.last_name
 
     def get_short_name(self):
         "Returns the short name for the user."
         return self.last_name
+
+    def get_absolute_update_url(self):
+        return reverse("update_account", kwargs={"pk": self.pk})
 
     @property
     def is_admin_user(self):
@@ -84,6 +121,5 @@ class User(AbstractBaseUser, PermissionsMixin):
     #         """.format(self.get_full_name(), f"{settings.EMAIL_DOMAIN}/api/users/verify/{self.activation_token}/")
     #     # print(body)
     #     send_mail(subject, body, self.email)
-
 
 

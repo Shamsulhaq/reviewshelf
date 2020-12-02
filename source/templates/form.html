@@ -1,0 +1,9 @@
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    {{ form|crispy }}
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-block btn-info">{{ title }}</button>
+        </div>
+    </div>
+</form>

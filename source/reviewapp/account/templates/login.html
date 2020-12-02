@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Review shelf - Login{{ block.super }}{% endblock title %}
+{% block content %}
+
+    <div class="row pt-5">
+        <div class="col-lg-4 col-sm-12 col-md-12"></div>
+        <div class="col-lg-4 col-sm-12 col-md-12 py-3 bg-secondary">
+            <div class="card-header text-left"><b>Log in</b></div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-block btn-info">Login</button>
+                        </div>
+                    </div>
+                </form>
+                <a class="float-left text-info" href="{% url 'password_reset' %}">Forgotten account</a>
+                <a class="float-right text-success" href="{% url 'signup' %}">Create new account</a>
+
+            </div><!-- end of card body -->
+        </div><!-- end of card -->
+    </div>
+{% endblock %}

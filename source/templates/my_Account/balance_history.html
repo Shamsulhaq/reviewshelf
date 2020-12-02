@@ -1,0 +1,25 @@
+{% extends 'my_Account/my_base.html' %}
+{% block content_areat %}
+    <div class="card">
+        <div class="card-body">
+            <div class="card-body">
+                <h3>Balance History of '{{ user.get_full_name }}'</h3>
+                <p class="float-right text-success">Current Balance '{{ user.balance }}' Points</p>
+            </div>
+            <hr>
+            <div class="card-body">
+                {% for his in history %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{ his.title }}</h5>
+                            <p>{{ his.created }}</p>
+                            <p>{{ his.description }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-info">No History Fund!</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

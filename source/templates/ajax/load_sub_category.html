@@ -1,0 +1,18 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $("#id_category").change(function () {
+        var url = $("#category").attr("data-sub-url");  // get the url of the `load_sub_category` view
+        var categoryId = $(this).val();  // get the selected category ID from the HTML input
+
+        $.ajax({                       // initialize an AJAX request
+            url: url,                    // set the url of the request (= localhost:8000/ajax/load/)
+            data: {
+                'category': categoryId       // add the category id to the GET parameters
+            },
+            success: function (data) {   // `data` is the return of the `load_sub_category` view function
+                $("#id_sub_category").html(data);  // replace the contents of the sub_category input with the data that came from the server
+            }
+        });
+
+    });
+</script>

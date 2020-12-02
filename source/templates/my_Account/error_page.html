@@ -1,0 +1,9 @@
+{% extends 'my_Account/my_base.html' %}
+{% load crispy_forms_tags %}
+{% block content_areat %}
+    <div class="text-center mt-5">
+        <h3 class="text-danger">{{ name }}</h3>
+        <p class="text-info">{{ details }}</p>
+    </div>
+
+{% endblock %}

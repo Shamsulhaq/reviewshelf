@@ -1,9 +1,10 @@
 from django.contrib.auth import logout
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import render, redirect
 from django.utils.http import is_safe_url
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
 
-from reviewapp.account.forms import UserLoginForm
+from .forms import UserLoginForm, UserRegistrationForm
 
 
 class NextUrlMixin(object):
@@ -39,7 +40,6 @@ class UserLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 
     def form_valid(self, form):
         next_path = self.get_next_url()
-        print(form.fields)
         return redirect(next_path)
 
     def get_context_data(self, **kwargs):
@@ -51,4 +51,22 @@ class UserLoginView(NextUrlMixin, RequestFormAttachMixin, FormView):
 def get_logout(request):
     logout(request)
     return redirect('/')
+
+
+class UserRegistrationView(SuccessMessageMixin, CreateView):
+    form_class = UserRegistrationForm
+    template_name = 'registration.html'
+    success_message = 'Registration successful.'
+    success_url = '/login/'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        else:
+            return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(UserRegistrationView, self).get_context_data(**kwargs)
+        context['title'] = 'Registration'
+        return context
 

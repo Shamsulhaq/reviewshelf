@@ -1,0 +1,19 @@
+{% extends 'my_Account/my_base.html' %}
+{% load crispy_forms_tags %}
+{% block content_areat %}
+    <div class="card">
+        <div class="card-body">
+            <h5>Profile Update</h5>
+            <form method="post" enctype="multipart/form-data" id="category" data-sub-url="{% url 'load_sub_category' %}" novalidate>{% csrf_token %}
+                {{ form|crispy }}
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-block btn-info">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

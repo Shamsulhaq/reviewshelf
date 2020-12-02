@@ -23,6 +23,7 @@ class UserLoginForm(forms.Form):
             not_active = qs.filter(is_active=False)
             if not_active.exists():
                 msg = messages.error(self.request,"User is Inactive")
+                raise forms.ValidationError(msg)
 
         user = authenticate(self.request, email=email, password=password)
         if user is None:
@@ -61,3 +62,21 @@ class UserRegistrationForm(forms.ModelForm):
         user.is_active = True
         user.save()
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'bio',
+            'phone',
+            'photo',
+            'date_of_birth',
+            'gender',
+        )
+        widgets = {
+            'date_of_birth': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+

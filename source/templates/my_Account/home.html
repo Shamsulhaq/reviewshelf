@@ -1,0 +1,104 @@
+{% extends 'my_Account/my_base.html' %}
+{% block content_areat %}
+    <div class="container emp-profile card pt-2">
+        <div class="row">
+            <div class="col-md-4">
+                {% if user.photo %}
+                    <div class="profile-img">
+                        <img src="{{ user.photo.url }}" width="200" height="200"
+                             alt="{{ user.get_full_name }}"/>
+                    </div>
+                {% else %}
+                    <div class="profile-img">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog"
+                            width="200" height="200" alt=""/>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6">
+                <div class="profile-head pt-5">
+                    <h5>{{ user.get_full_name }}</h5>
+                    <p>{{ user.bio }}</p>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <a href="{{ user.get_absolute_update_url }}" class=" btn btn-primary"> Edit Profile</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-work">
+                    <p>Total Balance: {{ user.balance }} Points</p>
+                    <p>Total Item Post: {{ user.creator.count }} </p>
+                    <p>Total Review: {{ user.reviewer.count }} </p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>First Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.first_name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Last Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.last_name }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Email</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.email }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Phone</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.phone }}</p>
+                            </div>
+                        </div>
+                        {% if user.date_of_birth %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Date of Birth</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ user.date_of_birth }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if user.gender %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label>Gender</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <p>{{ user.gender }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Last Login</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>{{ user.last_login }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

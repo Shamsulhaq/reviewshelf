@@ -1,0 +1,25 @@
+{% extends 'base/base.html' %}
+
+{% block container %}
+{% url 'my_account' as my_account %}
+{% url 'balance_history' as history_url %}
+{% url 'password_change' as settings %}
+{% url 'item_list' as item_list %}
+{% url 'item_create' as create %}
+    <div class="row">
+        <div class="col-md-3 ">
+            <div class="list-group ">
+                <a href="{% url 'my_account' %}" class="list-group-item list-group-item-action {% if request.path == my_account %} active{% endif %}">Dashboard</a>
+                <a href="{% url 'item_create' %}" class="list-group-item list-group-item-action {% if request.path == create %} active{% endif %}">Add An Item</a>
+                <a href="{% url 'item_list' %}" class="list-group-item list-group-item-action {% if request.path == item_list %} active{% endif %}">All Items</a>
+                <a href="{% url 'balance_history' %}" class="list-group-item list-group-item-action {% if request.path == history_url %} active{% endif %}">Balance History</a>
+                <a href="{% url 'password_change' %}" class="list-group-item list-group-item-action {% if request.path == settings %} active{% endif %}">Settings</a>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            {% block content_areat %}
+            {% endblock %}
+        </div>
+    </div>
+{% endblock %}

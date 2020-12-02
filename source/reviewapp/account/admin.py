@@ -1,5 +1,5 @@
 from django.contrib import admin
-from reviewapp.account.models import User
-
+from .models import User,BalanceHistory
 
 admin.site.register(User)
+admin.site.register(BalanceHistory)
